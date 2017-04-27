@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+<body>
+<div id="app">
+    <div class="container"></div>
+    <input v-on:keyup.enter="addNewElement()" v-on:keyup.delete="deleteItem(inputVal)" v-model="inputVal" class="reset">
+ 
+</div>
+
+<script>
+
+var listItem = ['first', 'second'];
+
+var app5 = new Vue({
+    el: '#app',
+    methods: {
+        init: function () {
+            for (i = 0; i < listItem.length; i++) {
+                var element = $('.container').append('<span class="item">' + listItem[i] +'<i class="fa fa-times" aria-hidden="true" onclick="app5.closeItem(this.inputVal)"></i> </span>');
+            }
+        },
+
+        addNewElement: function(){
+            if (this.inputVal){                
+                var element = $('.container').append('<span class="item">' + this.inputVal +'<i class="fa fa-times" aria-hidden="true" onclick="app5.closeItem(this.inputVal)"></i> </span>');
+                listItem.push(this.inputVal);
+                this.inputVal = '';
+                document.querySelector('.reset').value = '';
+            }
+
+            console.log(listItem);
+        },
+
+        deleteItem: function () {
+            console.log(this.inputVal)
+            if (!this.inputVal){ 
+                console.log(this.inputVal)
+                var parentEl = document.querySelector('.container'),
+                lastChild = document.querySelectorAll('.item')[document.querySelectorAll('.item').length - 1];
+                parentEl.removeChild(lastChild);
+            }
+
+        },
+        closeItem: function(){
+            var parentEl = event.target.parentNode.parentNode,
+            lastChild = event.target.parentNode;
+            parentEl.removeChild(lastChild);
+            console.log(event.target.parentNode)
+        }
+    }
+})
+app5.init();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+#app{
+	border: 1px solid orange;
+	display: inline-block;
+	padding: 10px;
+}
+.container{
+	display: inline-block;
+}
+.reset{
+	border: 1px dotted transparent;
+	outline: none;
+}
+.reset:focus{
+	border-bottom: 1px dotted orange;
+}
+.item{
+	background: orange;
+	border-radius: 10px;
+	color: #fff;
+	padding: 4px 8px;
+	margin: 2px;
+
+}
+.item .fa{
+	margin-left: 5px;
+	cursor: pointer;
+}
