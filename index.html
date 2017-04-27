@@ -12,55 +12,41 @@
 </head>
 <body>
 <div id="app">
-    <div class="container"></div>
-    <input v-on:keyup.enter="addNewElement()" v-on:keyup.delete="deleteItem(inputVal)" v-model="inputVal" class="reset">
- 
+  <tag v-for="item in tagList" v-bind:list="item" :key="item"></tag>
+  <input v-on:change="addItem()" v-on:keyup.delete="deleteItem()" v-model="inputVal" class="reset">
 </div>
 
 <script>
-
-var listItem = ['first', 'second'];
-
-var app5 = new Vue({
-    el: '#app',
-    methods: {
-        init: function () {
-            for (i = 0; i < listItem.length; i++) {
-                var element = $('.container').append('<span class="item">' + listItem[i] +'<i class="fa fa-times" aria-hidden="true" onclick="app5.closeItem(this.inputVal)"></i> </span>');
-            }
-        },
-
-        addNewElement: function(){
-            if (this.inputVal){                
-                var element = $('.container').append('<span class="item">' + this.inputVal +'<i class="fa fa-times" aria-hidden="true" onclick="app5.closeItem(this.inputVal)"></i> </span>');
-                listItem.push(this.inputVal);
-                this.inputVal = '';
-                document.querySelector('.reset').value = '';
-            }
-
-            console.log(listItem);
-        },
-
-        deleteItem: function () {
-            console.log(this.inputVal)
-            if (!this.inputVal){ 
-                console.log(this.inputVal)
-                var parentEl = document.querySelector('.container'),
-                lastChild = document.querySelectorAll('.item')[document.querySelectorAll('.item').length - 1];
-                parentEl.removeChild(lastChild);
-            }
-
-        },
-        closeItem: function(){
-            var parentEl = event.target.parentNode.parentNode,
-            lastChild = event.target.parentNode;
-            parentEl.removeChild(lastChild);
-            console.log(event.target.parentNode)
-        }
+Vue.component("tag", {
+  props: ["list"],
+  template: '<span class="item">{{ list }}  <i class="fa fa-times" aria-hidden="true" onclick="app.closeItem()"></i> </span>'
+});
+var app = new Vue({
+  el: "#app",
+  data: {
+    tagList: ["first", "second", "third"],
+    addItem: function() {
+      if (this.inputVal) {
+        app.tagList.push(this.inputVal);
+        this.inputVal = "";
+        document.querySelector(".reset").value = "";
+      }
+    },
+    deleteItem: function() {
+      if (!this.inputVal) {
+        app.tagList.pop();
+      }
+    },
+    closeItem: function() {
+        console.log(event.target);
+        var parentEl = event.target.parentNode.parentNode,
+        lastChild = event.target.parentNode;
+        parentEl.removeChild(lastChild);
+        console.log(event.target.parentNode);
     }
-})
-app5.init();
-</script>
+  }
+});
 
+</script>
 </body>
 </html>
