@@ -19,7 +19,7 @@
 <script>
 Vue.component("tag", {
   props: ["list"],
-  template: '<span class="item">{{ list }}  <i class="fa fa-times" aria-hidden="true" onclick="app.closeItem()"></i> </span>'
+  template: '<span class="item">{{ list }}  <i class="fa fa-times" aria-hidden="true" onclick="app.closeItem(this)"></i> </span>'
 });
 var app = new Vue({
   el: "#app",
@@ -37,12 +37,12 @@ var app = new Vue({
         app.tagList.pop();
       }
     },
-    closeItem: function() {
-        console.log(event.target);
-        var parentEl = event.target.parentNode.parentNode,
-        lastChild = event.target.parentNode;
+    closeItem: function(elem) {
+        console.log(elem);
+        var parentEl = elem.parentNode.parentNode,
+        lastChild = elem.parentNode;
         parentEl.removeChild(lastChild);
-        console.log(event.target.parentNode);
+        console.log(elem.parentNode);
     }
   }
 });
